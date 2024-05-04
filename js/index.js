@@ -3,8 +3,17 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-// Creamos una constante para el jugador1 utilizando la clase Sprite, pasandole el parametro de posicion como un objeto con con las coordenadas x,y en pixeles
-const jugador1 = new Sprite({
+//Creamos un constante para el fondo utilizando la clase sprite
+const fondo = new Sprite({
+    posicion: {
+        x: 0,
+        y: 0
+    },
+    imagen: "./img/fondov2.png"
+})
+
+// Creamos una constante para el jugador1 utilizando la clase Jugador, pasandole el parametro de posicion como un objeto con con las coordenadas x,y en pixeles
+const jugador1 = new Jugador({
     posicion: {
         x: 50,
         y: 100
@@ -21,7 +30,7 @@ const jugador1 = new Sprite({
 
 // jugador1.pruebaMostrarPersonaje();
 
-const jugador2 = new Sprite({
+const jugador2 = new Jugador({
     posicion: {
         x: canvas.width - 150,
         y: 100
@@ -184,14 +193,14 @@ function movimiento(){
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Prubas colision entre personajes 
+    // Pruebas colision entre personajes 
     // if(jugador1.posicion.x + jugador1.anchura >= jugador2.posicion.x && jugador1.posicion.x <= jugador2.posicion.x + jugador2.anchura){
     //     if(jugador1.posicion.y + jugador1.altura >= jugador2.posicion.y && jugador1.posicion.y <= jugador2.posicion.y + jugador2.altura){
     //         jugador1.direccion.x -= 4;
     //         jugador2.direccion.x += 4;
     //     }
     // }
-
+    fondo.actualizar();
     jugador1.actualizar();
     jugador2.actualizar();
     

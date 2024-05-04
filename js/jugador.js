@@ -46,14 +46,15 @@ class Jugador{
 
         // si la posicion del jugador1 es mayor o igual a la altura del canvas - 50 se queda a 50 pixeles del borde inferior, sino, se aplica la gravedad a la
         // direccion "y", haciendo que los jugadores caigan hasta que se cumple la condicion antes mencionada
-        if(this.posicion.y + this.altura >= canvas.height -50){
-            this.posicion.y = canvas.height - (this.altura + 50); 
+        if(this.posicion.y + this.altura >= canvas.height - 40){
+            this.posicion.y = canvas.height - (this.altura + 40); 
             this.direccion.y = 0;
             // this.direccion.x = 0;
         } else {
             this.direccion.y += gravedad;
         }
 
+        
         //hacer que los personajes no se salgan de los lados del canvas
         if(this.posicion.x <= 0){
             this.posicion.x = 0;
