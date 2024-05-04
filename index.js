@@ -229,3 +229,29 @@ function movimiento(){
 }
 
 movimiento();
+let incializado = false;
+function fpsMeter() {
+    let prevTime = Date.now(),
+        frames = 0;
+
+    requestAnimationFrame(function loop() {
+      const time = Date.now();
+      frames++;
+      if (time > prevTime + 1000) {
+        let fps = Math.round( ( frames * 1000 ) / ( time - prevTime ) );
+        prevTime = time;
+        frames = 0;
+
+        console.log("FPS:" + fps);
+        if(fps < 100){
+            movimiento();
+            movimiento();
+        }
+        incializado = true;
+      }
+
+      if(!incializado) requestAnimationFrame(loop);
+    });
+  }
+  
+  fpsMeter();
