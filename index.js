@@ -128,6 +128,7 @@ function colisionAtaque({jugadorAtacante, jugadorAtacado}){
 }
 
 function resetearTiempo() {
+    cancelAnimationFrame(animationFrameId);
     tiempo = 60;
     tiempoRestante();
 }
@@ -229,6 +230,8 @@ function movimiento(){
 }
 
 movimiento();
+
+// En pantallas inferiores a 100hz se ejecuta la funcion de movimiento para compensar la falta de frames ya que de no ser ai los jugadores se mueven mas lento y con bastante delay
 let incializado = false;
 function fpsMeter() {
     let prevTime = Date.now(),
@@ -255,3 +258,21 @@ function fpsMeter() {
   }
   
   fpsMeter();
+
+const reiniciar = document.getElementById("reiniciar");
+
+reiniciar.addEventListener("click", () => {
+    clearTimeout(timeout);
+    resetearTiempo();
+    jugador1.vida = 100;
+    jugador2.vida = 100;
+    jugador1.posicion.x = 50;
+    jugador1.posicion.y = 100;
+    jugador2.posicion.x = canvas.width - 150;
+    jugador2.posicion.y = 100;
+    document.getElementById("vidaJug1").style.clipPath = "inset(0% 0% 0% 0%)";
+    document.getElementById("vidaJug2").style.clipPath = "inset(0% 0% 0% 0%)";
+    document.getElementById("resultado").innerHTML = "";
+    movimiento();
+    fpsMeter();
+});
