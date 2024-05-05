@@ -1,8 +1,10 @@
-class Jugador{
+class Jugador extends Sprite{
 
     // Un constructor indica que parametros va a tener un objeto de la clase Sprite
-    constructor({posicion, color, direccion, posicionLateral}){
-        this.posicion = posicion
+    constructor({posicion, color, direccion, posicionLateral, imagenSrc, escala = 1, cantSprites = 1, hitboxTemporal = { x: 0, y: 0 }, sprites}){
+
+        super({posicion, imagenSrc, escala, cantSprites, hitboxTemporal})
+
         this.color = color
         this.direccion = direccion
         this.altura = 200
@@ -18,24 +20,22 @@ class Jugador{
         }
         this.atacando = false;
         this.vida = 100;
-    }
 
-    pruebaMostrarPersonaje(){
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.posicion.x, this.posicion.y, this.anchura, this.altura);
+        this.spriteActual = 0;
+        this.spritesPasados = 0;
+        this.velocidadSprite = 30;
+        this.sprites = sprites;
 
-        if(this.atacando){
-            ctx.fillStyle = "yellow";
-            ctx.fillRect(this.ataque.posicion.x, this.ataque.posicion.y, this.ataque.width, this.ataque.height)  
+        for(const sprite in this.sprites){
+            sprites[sprite].imagen = new Image();
+            sprites[sprite].imagen.src = sprites[sprite].imagenSrc;
         }
-    }
-
-    mostrarSprite(){
 
     }
 
     actualizar(){
-        this.pruebaMostrarPersonaje();
+        this.mostrarSprite();
+        this.animacionSprite();
 
         this.ataque.posicion.x = this.posicion.x - this.ataque.posicionLateral.x;
         this.ataque.posicion.y = this.posicion.y;
@@ -68,5 +68,34 @@ class Jugador{
         setTimeout(() => {
             this.atacando = false;
         }, 100);
+    }
+
+    cambiarSprite(sprite){
+
+       switch (sprite) {
+        case 'quieto':
+            if (this.imagen !== this.sprites.quieto.imagen) {
+                this.imagen = this.sprites.quieto.imagen;
+                this.cantSprites = this.sprites.quieto.cantSprites;
+                this.spriteActual = 0;
+            }
+            break;
+        case 'moviendo':
+            if (this.imagen !== this.sprites.moviendo.imagen) {
+                this.imagen = this.sprites.moviendo.imagen;
+                this.cantSprites = this.sprites.moviendo.cantSprites;
+                this.spriteActual = 0;
+            }
+            break;
+        case 'salto':
+            if (this.imagen !== this.sprites.salto.imagen) {
+                this.imagen = this.sprites.salto.imagen;
+                this.cantSprites = this.sprites.salto.cantSprites;
+                this.spriteActual = 0;
+            }
+            break;
+       
+      
+       }
     }
 }

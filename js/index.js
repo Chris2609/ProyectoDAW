@@ -9,7 +9,7 @@ const fondo = new Sprite({
         x: 0,
         y: 0
     },
-    imagen: "./img/fondov2.png"
+    imagenSrc: "./img/fondov2.png"
 })
 
 // Creamos una constante para el jugador1 utilizando la clase Jugador, pasandole el parametro de posicion como un objeto con con las coordenadas x,y en pixeles
@@ -25,6 +25,27 @@ const jugador1 = new Jugador({
     },
     posicionLateral:{
         x: 0,
+    },
+    imagenSrc: "./img/davidBase.png",
+    cantSprites: 2,
+    escala: 2.8,
+    hitboxTemporal: {
+        x: 0,
+        y: -25
+    },
+    sprites: {
+        quieto: {
+            imagenSrc: "./img/davidBase.png",
+            cantSprites: 2
+        },
+        moviendo: {
+            imagenSrc: "./img/davidCorriendo.png",
+            cantSprites: 4
+        },
+        salto: {
+            imagenSrc: "./img/saltoYbajada.png",
+            cantSprites: 4
+        }
     }
 });
 
@@ -42,6 +63,13 @@ const jugador2 = new Jugador({
     },
     posicionLateral:{
         x: 100,
+    },
+    imagenSrc: "./img/davidBase.png",
+    cantSprites: 2,
+    escala: 2.8,
+    hitboxTemporal: {
+        x: 0,
+        y: -25
     }
 });
 
@@ -209,8 +237,17 @@ function movimiento(){
 
     if (teclas.a.presionada) {
         jugador1.direccion.x = -4;
+        jugador1.cambiarSprite('moviendo');
     } else if (teclas.d.presionada) {
         jugador1.direccion.x = 4;
+        jugador1.cambiarSprite('moviendo');
+    } else{
+        jugador1.cambiarSprite('quieto');
+
+    }
+
+    if (jugador1.direccion.y < 0) {
+        jugador1.cambiarSprite('salto');
     }
 
     if (teclas.flechaIzquierda.presionada) {
