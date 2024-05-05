@@ -1,10 +1,10 @@
 class Jugador extends Sprite{
 
     // Un constructor indica que parametros va a tener un objeto de la clase Sprite
-    constructor({posicion, color, direccion, posicionLateral, imagenSrc, escala = 1, cantSprites = 1, hitboxTemporal = { x: 0, y: 0 }, sprites}){
+    constructor({nombre, posicion, color, direccion, posicionLateral, imagenSrc, escala = 1, cantSprites = 1, hitboxTemporal = { x: 0, y: 0 }, sprites}){
 
         super({posicion, imagenSrc, escala, cantSprites, hitboxTemporal})
-
+        this.nombre = nombre
         this.color = color
         this.direccion = direccion
         this.altura = 200

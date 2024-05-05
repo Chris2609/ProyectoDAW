@@ -18,17 +18,34 @@ class Sprite {
   }
 
   mostrarSprite() {
-    ctx.drawImage(
-      this.imagen,
-      this.spriteActual * (this.imagen.width / this.cantSprites),
-      0,
-      this.imagen.width / this.cantSprites,
-      this.imagen.height,
-      this.posicion.x - this.hitboxTemporal.x,
-      this.posicion.y - this.hitboxTemporal.y,
-      (this.imagen.width / this.cantSprites) * this.escala,
-      this.imagen.height * this.escala
-    );
+    if (this.nombre === "jugador2") {
+      ctx.save();
+      ctx.scale(-1, 1);
+      ctx.drawImage(
+        this.imagen,
+        (this.cantSprites - this.spriteActual - 1) * (this.imagen.width / this.cantSprites),
+        0,
+        this.imagen.width / this.cantSprites,
+        this.imagen.height,
+        -(this.posicion.x - this.hitboxTemporal.x) - (this.imagen.width / this.cantSprites) * this.escala,
+        this.posicion.y - this.hitboxTemporal.y,
+        (this.imagen.width / this.cantSprites) * this.escala,
+        this.imagen.height * this.escala
+      );
+      ctx.restore();
+    } else{
+      ctx.drawImage(
+        this.imagen,
+        this.spriteActual * (this.imagen.width / this.cantSprites),
+        0,
+        this.imagen.width / this.cantSprites,
+        this.imagen.height,
+        this.posicion.x - this.hitboxTemporal.x,
+        this.posicion.y - this.hitboxTemporal.y,
+        (this.imagen.width / this.cantSprites) * this.escala,
+        this.imagen.height * this.escala
+      );
+    }
   }
 
   animacionSprite() {
