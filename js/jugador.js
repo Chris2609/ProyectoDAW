@@ -23,7 +23,7 @@ class Jugador extends Sprite{
 
         this.spriteActual = 0;
         this.spritesPasados = 0;
-        this.velocidadSprite = 35;
+        this.velocidadSprite = 30;
         this.sprites = sprites;
 
         for(const sprite in this.sprites){
@@ -39,6 +39,8 @@ class Jugador extends Sprite{
 
         this.ataque.posicion.x = this.posicion.x - this.ataque.posicionLateral.x;
         this.ataque.posicion.y = this.posicion.y;
+        
+        ctx.fillRect(this.ataque.posicion.x, this.ataque.posicion.y, this.ataque.width, this.ataque.height);
         
         this.posicion.y += this.direccion.y;
         this.posicion.x += this.direccion.x;
@@ -72,7 +74,12 @@ class Jugador extends Sprite{
     }
 
     cambiarSprite(sprite){
-        
+        try {
+            if(this.imagen === this.sprites.ataque.imagen && this.spriteActual < this.sprites.ataque.cantSprites - 1) return;
+
+        } catch (error) {
+            
+        }
        switch (sprite) {
         case 'quieto':
             if (this.imagen !== this.sprites.quieto.imagen) {

@@ -75,7 +75,7 @@ const jugador2 = new Jugador({
     cantSprites: 2,
     escala: 2.8,
     hitboxTemporal: {
-        x: 80,
+        x: -100,
         y: -25
     },
     sprites: {
@@ -90,6 +90,10 @@ const jugador2 = new Jugador({
         salto: {
             imagenSrc: "./img/saltoYbajada.png",
             cantSprites: 4
+        },
+        ataque: {
+            imagenSrc: "./img/davidAtaque.png",
+            cantSprites: 5
         }
     }
 });

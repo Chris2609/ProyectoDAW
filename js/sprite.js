@@ -22,30 +22,30 @@ class Sprite {
       ctx.save();
       ctx.scale(-1, 1);
       ctx.drawImage(
-        this.imagen,
-        (this.spriteActual) * (this.imagen.width / this.cantSprites), // Mantenemos el orden original
-        0,
-        this.imagen.width / this.cantSprites,
-        this.imagen.height,
-        -((this.posicion.x - this.hitboxTemporal.x) + (this.imagen.width / this.cantSprites) * this.escala), // Ajustamos la posición x
-        this.posicion.y - this.hitboxTemporal.y,
-        (this.imagen.width / this.cantSprites) * this.escala,
-        this.imagen.height * this.escala
+          this.imagen,
+          (this.spriteActual) * (this.imagen.width / this.cantSprites), // Mantenemos el orden original
+          0,
+          this.imagen.width / this.cantSprites,
+          this.imagen.height,
+          -((this.posicion.x - this.hitboxTemporal.x) + (this.imagen.width / this.cantSprites) * this.escala) + (this.imagen.width / this.cantSprites) * this.escala, // Ajustamos la posición x para alinear con el final de la imagen anterior
+          this.posicion.y - this.hitboxTemporal.y,
+          (this.imagen.width / this.cantSprites) * this.escala,
+          this.imagen.height * this.escala
       );
       ctx.restore();
-    } else {
+  } else {
       ctx.drawImage(
-        this.imagen,
-        this.spriteActual * (this.imagen.width / this.cantSprites),
-        0,
-        this.imagen.width / this.cantSprites,
-        this.imagen.height,
-        this.posicion.x - this.hitboxTemporal.x,
-        this.posicion.y - this.hitboxTemporal.y,
-        (this.imagen.width / this.cantSprites) * this.escala,
-        this.imagen.height * this.escala
+          this.imagen,
+          this.spriteActual * (this.imagen.width / this.cantSprites),
+          0,
+          this.imagen.width / this.cantSprites,
+          this.imagen.height,
+          this.posicion.x - this.hitboxTemporal.x,
+          this.posicion.y - this.hitboxTemporal.y,
+          (this.imagen.width / this.cantSprites) * this.escala,
+          this.imagen.height * this.escala
       );
-    }
+  }
   }
 
   animacionSprite() {
