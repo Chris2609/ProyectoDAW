@@ -23,7 +23,7 @@ class Jugador extends Sprite{
 
         this.spriteActual = 0;
         this.spritesPasados = 0;
-        this.velocidadSprite = 30;
+        this.velocidadSprite = 35;
         this.sprites = sprites;
 
         for(const sprite in this.sprites){
@@ -64,6 +64,7 @@ class Jugador extends Sprite{
     }
 
     realizarAtaque(){
+        this.cambiarSprite('ataque');
         this.atacando = true;
         setTimeout(() => {
             this.atacando = false;
@@ -71,7 +72,7 @@ class Jugador extends Sprite{
     }
 
     cambiarSprite(sprite){
-
+        
        switch (sprite) {
         case 'quieto':
             if (this.imagen !== this.sprites.quieto.imagen) {
@@ -94,7 +95,13 @@ class Jugador extends Sprite{
                 this.spriteActual = 0;
             }
             break;
-       
+       case 'ataque':
+            if (this.imagen !== this.sprites.ataque.imagen) {
+                this.imagen = this.sprites.ataque.imagen;
+                this.cantSprites = this.sprites.ataque.cantSprites;
+                this.spriteActual = 0;
+            }
+            break;
       
        }
     }

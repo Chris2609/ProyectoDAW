@@ -46,6 +46,10 @@ const jugador1 = new Jugador({
         salto: {
             imagenSrc: "./img/saltoYbajada.png",
             cantSprites: 4
+        },
+        ataque: {
+            imagenSrc: "./img/davidAtaque.png",
+            cantSprites: 5
         }
     }
 });
@@ -73,6 +77,20 @@ const jugador2 = new Jugador({
     hitboxTemporal: {
         x: 80,
         y: -25
+    },
+    sprites: {
+        quieto: {
+            imagenSrc: "./img/davidBase.png",
+            cantSprites: 2
+        },
+        moviendo: {
+            imagenSrc: "./img/davidCorriendo.png",
+            cantSprites: 4
+        },
+        salto: {
+            imagenSrc: "./img/saltoYbajada.png",
+            cantSprites: 4
+        }
     }
 });
 
@@ -246,7 +264,6 @@ function movimiento(){
         jugador1.cambiarSprite('moviendo');
     } else{
         jugador1.cambiarSprite('quieto');
-
     }
 
     if (jugador1.direccion.y < 0) {
@@ -255,10 +272,18 @@ function movimiento(){
 
     if (teclas.flechaIzquierda.presionada) {
         jugador2.direccion.x = -4;
+        jugador2.cambiarSprite('moviendo');
     } else if (teclas.flechaDerecha.presionada) {
         jugador2.direccion.x = 4;
+        jugador2.cambiarSprite('moviendo');
+    }else{
+        jugador2.cambiarSprite('quieto');
     }
 
+    if (jugador2.direccion.y < 0) {
+        jugador2.cambiarSprite('salto');
+    }
+    
     // ataques
 
     if (colisionAtaque({jugadorAtacante: jugador1, jugadorAtacado: jugador2}) && jugador1.atacando) {
