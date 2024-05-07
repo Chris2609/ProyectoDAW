@@ -24,6 +24,7 @@ class Jugador extends Sprite{
         }
         this.atacando = false;
         this.vida = 100;
+        this.proteccion = false;
 
         this.spriteActual = 0;
         this.spritesPasados = 0;
@@ -79,14 +80,25 @@ class Jugador extends Sprite{
         }, 100);
     }
 
+    realizarProteccion(){
+        this.cambiarSprite('proteccion');
+        this.proteccion = true;
+        setTimeout(() => {
+            this.proteccion = false;
+        }, 1000);
+    }
+
     cambiarSprite(sprite){
         try {
             if(this.imagen === this.sprites.ataque.imagen && this.spriteActual < this.sprites.ataque.cantSprites - 1) return;
-
         } catch (error) {
             
         }
-        
+        try {
+            if(this.imagen === this.sprites.proteccion.imagen && this.spriteActual < this.sprites.proteccion.cantSprites - 1) return;
+        } catch (error) {
+
+        }
        switch (sprite) {
         case 'quieto':
             if (this.imagen !== this.sprites.quieto.imagen) {
@@ -116,7 +128,13 @@ class Jugador extends Sprite{
                 this.spriteActual = 0;
             }
             break;
-      
+        case 'proteccion':
+            if (this.imagen !== this.sprites.proteccion.imagen) {
+                this.imagen = this.sprites.proteccion.imagen;
+                this.cantSprites = this.sprites.proteccion.cantSprites;
+                this.spriteActual = 0;
+            }
+            break;
        }
     }
 }

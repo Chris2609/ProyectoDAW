@@ -1,5 +1,8 @@
 // obtener el canvas, establecer el contenido de este en 2d y rellenarlo de negro para confirmar su posicion
 
+var psjJug1 = "jon";
+var psjJug2;
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -27,7 +30,7 @@ const jugador1 = new Jugador({
     posicionLateral:{
         x: 0,
     },
-    imagenSrc: "./img/davidBase.png",
+    imagenSrc: "./img/sprites/" + psjJug1 +"Base.png",
     cantSprites: 2,
     escala: 2.8,
     hitboxTemporal: {
@@ -36,20 +39,25 @@ const jugador1 = new Jugador({
     },
     sprites: {
         quieto: {
-            imagenSrc: "./img/davidBase.png",
+            imagenSrc: "./img/sprites/" + psjJug1 + "Base.png",
             cantSprites: 2
         },
         moviendo: {
-            imagenSrc: "./img/davidCorriendo.png",
+            imagenSrc: "./img/sprites/" + psjJug1 + "Corriendo.png",
             cantSprites: 4
         },
         salto: {
-            imagenSrc: "./img/davidSalto.png",
+            imagenSrc: "./img/sprites/" + psjJug1 + "Salto.png",
             cantSprites: 4
         },
         ataque: {
-            imagenSrc: "./img/davidAtaque.png",
+            imagenSrc: "./img/sprites/" + psjJug1 + "Ataque.png",
             cantSprites: 5,
+        },
+        proteccion: {
+            imagenSrc: "./img/sprites/" + psjJug1 + "Proteccion.png",
+            cantSprites: 3
+        
         }
     }
 });
@@ -72,7 +80,7 @@ const jugador2 = new Jugador({
         x: 150,
         y: 1000
     },
-    imagenSrc: "./img/davidBase.png",
+    imagenSrc: "./img/sprites/davidBase.png",
     cantSprites: 2,
     escala: 2.8,
     hitboxTemporal: {
@@ -81,20 +89,24 @@ const jugador2 = new Jugador({
     },
     sprites: {
         quieto: {
-            imagenSrc: "./img/davidBase.png",
+            imagenSrc: "./img/sprites/davidBase.png",
             cantSprites: 2
         },
         moviendo: {
-            imagenSrc: "./img/davidCorriendo.png",
+            imagenSrc: "./img/sprites/davidCorriendo.png",
             cantSprites: 4
         },
         salto: {
-            imagenSrc: "./img/davidSalto.png",
+            imagenSrc: "./img/sprites/davidSalto.png",
             cantSprites: 4
         },
         ataque: {
-            imagenSrc: "./img/davidAtaque.png",
-            cantSprites: 5
+            imagenSrc: "./img/sprites/davidAtaque.png",
+            cantSprites: 5,
+        },
+        proteccion: {
+            imagenSrc: "./img/sprites/davidProteccion.png",
+            cantSprites: 3
         }
     }
 });
@@ -124,12 +136,14 @@ window.addEventListener('keydown', (event) => {
             break;
         case "s":
             jugador1.direccion.y = 6;
+            jugador1.realizarProteccion();
             break;
         case "ArrowUp":
             jugador2.direccion.y = -6;
             break;
         case "ArrowDown":
             jugador2.direccion.y = 6;
+            jugador2.realizarProteccion();
             break;
         case "a":
             teclas.a.presionada = true;
@@ -291,7 +305,7 @@ function movimiento(){
     
     // ataques
 
-    if (colisionAtaque({jugadorAtacante: jugador1, jugadorAtacado: jugador2}) && jugador1.atacando) {
+    if (colisionAtaque({jugadorAtacante: jugador1, jugadorAtacado: jugador2}) && jugador1.atacando && !jugador2.proteccion) {
         jugador1.atacando = false;
         console.log("ataque jug1");
         jugador2.vida -= 10;
@@ -299,7 +313,7 @@ function movimiento(){
         document.getElementById("vidaJug2").style.clipPath = `inset(0% ${100 - jugador2.vida}% 0% 0%)`;
     }
 
-    if (colisionAtaque({jugadorAtacante: jugador2, jugadorAtacado: jugador1}) && jugador2.atacando) {
+    if (colisionAtaque({jugadorAtacante: jugador2, jugadorAtacado: jugador1}) && jugador2.atacando && !jugador1.proteccion) {
         jugador2.atacando = false;
         jugador1.vida -= 10;
         // document.getElementById("vidaJug1").style.width = jugador1.vida + "%";
@@ -355,3 +369,4 @@ reiniciar.addEventListener("click", () => {
     movimiento();
     fpsMeter();
 });
+
