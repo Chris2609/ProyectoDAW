@@ -44,7 +44,7 @@ const jugador1 = new Jugador({
             cantSprites: 4
         },
         salto: {
-            imagenSrc: "./img/saltoYbajada.png",
+            imagenSrc: "./img/davidSalto.png",
             cantSprites: 4
         },
         ataque: {
@@ -89,7 +89,7 @@ const jugador2 = new Jugador({
             cantSprites: 4
         },
         salto: {
-            imagenSrc: "./img/saltoYbajada.png",
+            imagenSrc: "./img/davidSalto.png",
             cantSprites: 4
         },
         ataque: {

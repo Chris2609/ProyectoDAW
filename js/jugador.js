@@ -44,7 +44,8 @@ class Jugador extends Sprite{
         this.ataque.posicion.x = this.posicion.x - this.ataque.posicionLateral.x;
         this.ataque.posicion.y = this.posicion.y;
         
-        ctx.fillRect(this.ataque.posicion.x, this.ataque.posicion.y, this.ataque.width, this.ataque.height);
+        // ver hitbox del ataque
+        // ctx.fillRect(this.ataque.posicion.x, this.ataque.posicion.y, this.ataque.width, this.ataque.height);
         
         this.posicion.y += this.direccion.y;
         this.posicion.x += this.direccion.x;
