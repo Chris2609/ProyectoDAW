@@ -1,7 +1,7 @@
 class Jugador extends Sprite{
 
     // Un constructor indica que parametros va a tener un objeto de la clase Sprite
-    constructor({nombre, posicion, color, direccion, posicionLateral, imagenSrc, escala = 1, cantSprites = 1, hitboxTemporal = { x: 0, y: 0 }, sprites}){
+    constructor({nombre, posicion, color, direccion, posicionLateral, imagenSrc, escala = 1, cantSprites = 1, hitboxTemporal = { x: 0, y: 0 }, velocidadSprite = 30, sprites}){
 
         super({posicion, imagenSrc, escala, cantSprites, hitboxTemporal})
         this.nombre = nombre
@@ -14,16 +14,20 @@ class Jugador extends Sprite{
                 x: this.posicion.x,
                 y: this.posicion.y
             },
-            posicionLateral,
-            width: 200,
-            height: 75,
+            posicionLateral: {
+                x: posicionLateral.x,
+                y: posicionLateral.y
+            
+            },
+            width: 250,
+            height: 125,
         }
         this.atacando = false;
         this.vida = 100;
 
         this.spriteActual = 0;
         this.spritesPasados = 0;
-        this.velocidadSprite = 30;
+        this.velocidadSprite = velocidadSprite;
         this.sprites = sprites;
 
         for(const sprite in this.sprites){
@@ -36,7 +40,7 @@ class Jugador extends Sprite{
     actualizar(){
         this.mostrarSprite();
         this.animacionSprite();
-
+    
         this.ataque.posicion.x = this.posicion.x - this.ataque.posicionLateral.x;
         this.ataque.posicion.y = this.posicion.y;
         
@@ -44,8 +48,7 @@ class Jugador extends Sprite{
         
         this.posicion.y += this.direccion.y;
         this.posicion.x += this.direccion.x;
-
-
+    
         // si la posicion del jugador1 es mayor o igual a la altura del canvas - 50 se queda a 50 pixeles del borde inferior, sino, se aplica la gravedad a la
         // direccion "y", haciendo que los jugadores caigan hasta que se cumple la condicion antes mencionada
         if(this.posicion.y + this.altura >= canvas.height - 40){
@@ -66,10 +69,12 @@ class Jugador extends Sprite{
     }
 
     realizarAtaque(){
+        this.velocidadSprite = 6;
         this.cambiarSprite('ataque');
         this.atacando = true;
         setTimeout(() => {
             this.atacando = false;
+            this.velocidadSprite = 30; // Restaurar la velocidad del sprite a 30
         }, 100);
     }
 
@@ -80,6 +85,7 @@ class Jugador extends Sprite{
         } catch (error) {
             
         }
+        
        switch (sprite) {
         case 'quieto':
             if (this.imagen !== this.sprites.quieto.imagen) {

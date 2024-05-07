@@ -49,7 +49,7 @@ const jugador1 = new Jugador({
         },
         ataque: {
             imagenSrc: "./img/davidAtaque.png",
-            cantSprites: 5
+            cantSprites: 5,
         }
     }
 });
@@ -69,7 +69,8 @@ const jugador2 = new Jugador({
         y: 0
     },
     posicionLateral:{
-        x: 100,
+        x: 150,
+        y: 1000
     },
     imagenSrc: "./img/davidBase.png",
     cantSprites: 2,
