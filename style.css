@@ -85,7 +85,7 @@ body {
   width: 100%;
 }
 
-#reiniciar {
+#personajes, #iniciar {
   display: inline-block;
   margin-top: 30px;
   background-color: black;
@@ -104,3 +104,12 @@ body {
               height: 100vw;
           }
       } */
+
+.seleccionPersonajes{
+  margin-top: 180px;
+}
+
+.personajes{
+  color: white;
+  cursor: pointer;
+}
