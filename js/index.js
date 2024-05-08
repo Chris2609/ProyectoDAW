@@ -1,5 +1,8 @@
 // obtener el canvas, establecer el contenido de este en 2d y rellenarlo de negro para confirmar su posicion
 
+var psjJug1 = "/jon/jon";
+var psjJug2 = "/david/david";
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -9,11 +12,12 @@ const fondo = new Sprite({
         x: 0,
         y: 0
     },
-    imagen: "./img/fondov2.png"
+    imagenSrc: "./img/fondov2.png"
 })
 
 // Creamos una constante para el jugador1 utilizando la clase Jugador, pasandole el parametro de posicion como un objeto con con las coordenadas x,y en pixeles
 const jugador1 = new Jugador({
+    nombre: 'jugador1',
     posicion: {
         x: 50,
         y: 100
@@ -25,12 +29,43 @@ const jugador1 = new Jugador({
     },
     posicionLateral:{
         x: 0,
+    },
+    imagenSrc: "./img/sprites/" + psjJug1 +"Base.png",
+    cantSprites: 2,
+    escala: 2.8,
+    hitboxTemporal: {
+        x: 0,
+        y: -25
+    },
+    sprites: {
+        quieto: {
+            imagenSrc: "./img/sprites/" + psjJug1 + "Base.png",
+            cantSprites: 2
+        },
+        moviendo: {
+            imagenSrc: "./img/sprites/" + psjJug1 + "Corriendo.png",
+            cantSprites: 4
+        },
+        salto: {
+            imagenSrc: "./img/sprites/" + psjJug1 + "Salto.png",
+            cantSprites: 4
+        },
+        ataque: {
+            imagenSrc: "./img/sprites/" + psjJug1 + "Ataque.png",
+            cantSprites: 5,
+        },
+        proteccion: {
+            imagenSrc: "./img/sprites/" + psjJug1 + "Proteccion.png",
+            cantSprites: 3
+        }
     }
 });
 
 // jugador1.pruebaMostrarPersonaje();
 
 const jugador2 = new Jugador({
+    nombre: 'jugador2',
+
     posicion: {
         x: canvas.width - 150,
         y: 100
@@ -41,7 +76,37 @@ const jugador2 = new Jugador({
         y: 0
     },
     posicionLateral:{
-        x: 100,
+        x: 150,
+        y: 1000
+    },
+    imagenSrc: "./img/sprites/" + psjJug2 +"Base.png",
+    cantSprites: 2,
+    escala: 2.8,
+    hitboxTemporal: {
+        x: -100,
+        y: -25
+    },
+    sprites: {
+        quieto: {
+            imagenSrc: "./img/sprites/" + psjJug2 + "Base.png",
+            cantSprites: 2
+        },
+        moviendo: {
+            imagenSrc: "./img/sprites/" + psjJug2 + "Corriendo.png",
+            cantSprites: 4
+        },
+        salto: {
+            imagenSrc: "./img/sprites/" + psjJug2 + "Salto.png",
+            cantSprites: 4
+        },
+        ataque: {
+            imagenSrc: "./img/sprites/" + psjJug2 + "Ataque.png",
+            cantSprites: 5,
+        },
+        proteccion: {
+            imagenSrc: "./img/sprites/" + psjJug2 + "Proteccion.png",
+            cantSprites: 3
+        }
     }
 });
 
@@ -70,12 +135,14 @@ window.addEventListener('keydown', (event) => {
             break;
         case "s":
             jugador1.direccion.y = 6;
+            jugador1.realizarProteccion();
             break;
         case "ArrowUp":
             jugador2.direccion.y = -6;
             break;
         case "ArrowDown":
             jugador2.direccion.y = 6;
+            jugador2.realizarProteccion();
             break;
         case "a":
             teclas.a.presionada = true;
@@ -194,12 +261,12 @@ function movimiento(){
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Pruebas colision entre personajes 
-    // if(jugador1.posicion.x + jugador1.anchura >= jugador2.posicion.x && jugador1.posicion.x <= jugador2.posicion.x + jugador2.anchura){
-    //     if(jugador1.posicion.y + jugador1.altura >= jugador2.posicion.y && jugador1.posicion.y <= jugador2.posicion.y + jugador2.altura){
-    //         jugador1.direccion.x -= 4;
-    //         jugador2.direccion.x += 4;
-    //     }
-    // }
+    if(jugador1.posicion.x + jugador1.anchura >= jugador2.posicion.x && jugador1.posicion.x <= jugador2.posicion.x + jugador2.anchura){
+        if(jugador1.posicion.y + jugador1.altura >= jugador2.posicion.y && jugador1.posicion.y <= jugador2.posicion.y + jugador2.altura){
+            jugador1.direccion.x -= 4;
+            jugador2.direccion.x += 4;
+        }
+    }
     fondo.actualizar();
     jugador1.actualizar();
     jugador2.actualizar();
@@ -209,19 +276,35 @@ function movimiento(){
 
     if (teclas.a.presionada) {
         jugador1.direccion.x = -4;
+        jugador1.cambiarSprite('moviendo');
     } else if (teclas.d.presionada) {
         jugador1.direccion.x = 4;
+        jugador1.cambiarSprite('moviendo');
+    } else{
+        jugador1.cambiarSprite('quieto');
+    }
+
+    if (jugador1.direccion.y < 0) {
+        jugador1.cambiarSprite('salto');
     }
 
     if (teclas.flechaIzquierda.presionada) {
         jugador2.direccion.x = -4;
+        jugador2.cambiarSprite('moviendo');
     } else if (teclas.flechaDerecha.presionada) {
         jugador2.direccion.x = 4;
+        jugador2.cambiarSprite('moviendo');
+    }else{
+        jugador2.cambiarSprite('quieto');
     }
 
+    if (jugador2.direccion.y < 0) {
+        jugador2.cambiarSprite('salto');
+    }
+    
     // ataques
 
-    if (colisionAtaque({jugadorAtacante: jugador1, jugadorAtacado: jugador2}) && jugador1.atacando) {
+    if (colisionAtaque({jugadorAtacante: jugador1, jugadorAtacado: jugador2}) && jugador1.atacando && !jugador2.proteccion) {
         jugador1.atacando = false;
         console.log("ataque jug1");
         jugador2.vida -= 10;
@@ -229,7 +312,7 @@ function movimiento(){
         document.getElementById("vidaJug2").style.clipPath = `inset(0% ${100 - jugador2.vida}% 0% 0%)`;
     }
 
-    if (colisionAtaque({jugadorAtacante: jugador2, jugadorAtacado: jugador1}) && jugador2.atacando) {
+    if (colisionAtaque({jugadorAtacante: jugador2, jugadorAtacado: jugador1}) && jugador2.atacando && !jugador1.proteccion) {
         jugador2.atacando = false;
         jugador1.vida -= 10;
         // document.getElementById("vidaJug1").style.width = jugador1.vida + "%";
@@ -285,3 +368,4 @@ reiniciar.addEventListener("click", () => {
     movimiento();
     fpsMeter();
 });
+
