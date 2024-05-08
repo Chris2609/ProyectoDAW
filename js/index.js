@@ -1,7 +1,7 @@
 // obtener el canvas, establecer el contenido de este en 2d y rellenarlo de negro para confirmar su posicion
 
-var psjJug1 = "jon";
-var psjJug2;
+var psjJug1 = "/jon/jon";
+var psjJug2 = "/david/david";
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -57,7 +57,6 @@ const jugador1 = new Jugador({
         proteccion: {
             imagenSrc: "./img/sprites/" + psjJug1 + "Proteccion.png",
             cantSprites: 3
-        
         }
     }
 });
@@ -80,7 +79,7 @@ const jugador2 = new Jugador({
         x: 150,
         y: 1000
     },
-    imagenSrc: "./img/sprites/davidBase.png",
+    imagenSrc: "./img/sprites/" + psjJug2 +"Base.png",
     cantSprites: 2,
     escala: 2.8,
     hitboxTemporal: {
@@ -89,23 +88,23 @@ const jugador2 = new Jugador({
     },
     sprites: {
         quieto: {
-            imagenSrc: "./img/sprites/davidBase.png",
+            imagenSrc: "./img/sprites/" + psjJug2 + "Base.png",
             cantSprites: 2
         },
         moviendo: {
-            imagenSrc: "./img/sprites/davidCorriendo.png",
+            imagenSrc: "./img/sprites/" + psjJug2 + "Corriendo.png",
             cantSprites: 4
         },
         salto: {
-            imagenSrc: "./img/sprites/davidSalto.png",
+            imagenSrc: "./img/sprites/" + psjJug2 + "Salto.png",
             cantSprites: 4
         },
         ataque: {
-            imagenSrc: "./img/sprites/davidAtaque.png",
+            imagenSrc: "./img/sprites/" + psjJug2 + "Ataque.png",
             cantSprites: 5,
         },
         proteccion: {
-            imagenSrc: "./img/sprites/davidProteccion.png",
+            imagenSrc: "./img/sprites/" + psjJug2 + "Proteccion.png",
             cantSprites: 3
         }
     }
