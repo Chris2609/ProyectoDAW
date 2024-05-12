@@ -5,75 +5,75 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 var psjJug1 = null;
 var psjJug2 = null;
 
-
 jonJug1.addEventListener("click", () => {
-    psjJug1 = "/jon/jon";
-    jonJug1.style.color = "green";
-    davidJug1.style.color = "white";
-    enriqueJug1.style.color = "white";
+  psjJug1 = "/jon/jon";
+  jonJug1.style.color = "green";
+  davidJug1.style.color = "white";
+  enriqueJug1.style.color = "white";
 });
 
 davidJug1.addEventListener("click", () => {
-    psjJug1 = "/david/david";
-    davidJug1.style.color = "green";
-    jonJug1.style.color = "white"; 
-    enriqueJug1.style.color = "white";
+  psjJug1 = "/david/david";
+  davidJug1.style.color = "green";
+  jonJug1.style.color = "white";
+  enriqueJug1.style.color = "white";
 });
 
 enriqueJug1.addEventListener("click", () => {
-    psjJug1 = "/enrique/enrique";
-    enriqueJug1.style.color = "green";
-    jonJug1.style.color = "white"; 
-    davidJug1.style.color = "white";
+  psjJug1 = "/enrique/enrique";
+  enriqueJug1.style.color = "green";
+  jonJug1.style.color = "white";
+  davidJug1.style.color = "white";
 });
 
 jonJug2.addEventListener("click", () => {
-    psjJug2 = "/jon/jon";
-    jonJug2.style.color = "green";
-    davidJug2.style.color = "white"; 
-    enriqueJug2.style.color = "white"
+  psjJug2 = "/jon/jon";
+  jonJug2.style.color = "green";
+  davidJug2.style.color = "white";
+  enriqueJug2.style.color = "white";
 });
 
 davidJug2.addEventListener("click", () => {
-    psjJug2 = "/david/david";
-    davidJug2.style.color = "green";
-    jonJug2.style.color = "white";
-    enriqueJug2.style.color = "white"
+  psjJug2 = "/david/david";
+  davidJug2.style.color = "green";
+  jonJug2.style.color = "white";
+  enriqueJug2.style.color = "white";
 });
 
 enriqueJug2.addEventListener("click", () => {
-    psjJug2 = "/enrique/enrique";
-    enriqueJug2.style.color = "green";
-    jonJug2.style.color = "white"; 
-    davidJug2.style.color = "white";
+  psjJug2 = "/enrique/enrique";
+  enriqueJug2.style.color = "green";
+  jonJug2.style.color = "white";
+  davidJug2.style.color = "white";
 });
 
 const botonIniciar = document.getElementById("iniciar");
 
 psjEscogidos = setInterval(() => {
-    if (psjJug1 != null && psjJug2 != null) {
-        clearInterval(psjEscogidos)
-        botonIniciar.style.color = "white";
-        botonIniciar.addEventListener("click", () => {
-            iniciar();
-          });   
-    }
+  if (psjJug1 != null && psjJug2 != null) {
+    clearInterval(psjEscogidos);
+    botonIniciar.style.color = "white";
+    botonIniciar.addEventListener("click", () => {
+      iniciar();
+    });
+  }
 }, 100);
 
 var timeout;
 
 function iniciar() {
+  document.getElementById("vidaJug1").style.clipPath = "inset(0% 0% 0% 0%)";
+  document.getElementById("vidaJug2").style.clipPath = "inset(0% 0% 0% 0%)";
+  document.getElementById("vidaJug1").style.backgroundColor = "rgb(109, 223, 94)";
+  document.getElementById("vidaJug2").style.backgroundColor = "rgb(109, 223, 94)";
+  resultado.innerHTML = "";
+  clearTimeout(timeout);
+  cancelAnimationFrame(animationFrameId);
 
-    document.getElementById("vidaJug1").style.clipPath = "inset(0% 0% 0% 0%)";
-    document.getElementById("vidaJug2").style.clipPath = "inset(0% 0% 0% 0%)";
-    resultado.innerHTML = "";
-    clearTimeout(timeout);
-    cancelAnimationFrame(animationFrameId);
-    
-    const seleccionPersonajes = document.querySelectorAll(".seleccionPersonajes");
-    seleccionPersonajes.forEach(selector => {
-        selector.style.display = "none";
-    });
+  const seleccionPersonajes = document.querySelectorAll(".seleccionPersonajes");
+  seleccionPersonajes.forEach((selector) => {
+    selector.style.display = "none";
+  });
 
   //Creamos un constante para el fondo utilizando la clase sprite
   const fondo = new Sprite({
@@ -127,6 +127,10 @@ function iniciar() {
         imagenSrc: "./img/sprites/" + psjJug1 + "Proteccion.png",
         cantSprites: 3,
       },
+      muerte: {
+        imagenSrc: "./img/sprites/" + psjJug1 + "Muerte.png",
+        cantSprites: 2,
+      },
     },
   });
 
@@ -176,6 +180,10 @@ function iniciar() {
         imagenSrc: "./img/sprites/" + psjJug2 + "Proteccion.png",
         cantSprites: 3,
       },
+      muerte: {
+        imagenSrc: "./img/sprites/" + psjJug2 + "Muerte.png",
+        cantSprites: 2,
+      },
     },
   });
 
@@ -198,39 +206,46 @@ function iniciar() {
 
   window.addEventListener("keydown", (event) => {
     // console.log(event.key);
-    switch (event.key) {
-      case "w":
-        jugador1.direccion.y = -6;
-        break;
-      case "s":
-        jugador1.direccion.y = 6;
-        jugador1.realizarProteccion();
-        break;
-      case "ArrowUp":
-        jugador2.direccion.y = -6;
-        break;
-      case "ArrowDown":
-        jugador2.direccion.y = 6;
-        jugador2.realizarProteccion();
-        break;
-      case "a":
-        teclas.a.presionada = true;
-        break;
-      case "d":
-        teclas.d.presionada = true;
-        break;
-      case "ArrowLeft":
-        teclas.flechaIzquierda.presionada = true;
-        break;
-      case "ArrowRight":
-        teclas.flechaDerecha.presionada = true;
-        break;
-      case " ":
-        jugador1.realizarAtaque();
-        break;
-      case "ç":
-        jugador2.realizarAtaque();
-        break;
+    if (!jugador1.muerto) {
+      switch (event.key) {
+        case "w":
+          jugador1.direccion.y = -6;
+          break;
+        case "s":
+          jugador1.direccion.y = 6;
+          jugador1.realizarProteccion();
+          break;
+        case "a":
+          teclas.a.presionada = true;
+          break;
+        case "d":
+          teclas.d.presionada = true;
+          break;
+        case " ":
+          jugador1.realizarAtaque();
+          break;
+      }
+    }
+
+    if (!jugador2.muerto) {
+      switch (event.key) {
+        case "ArrowUp":
+          jugador2.direccion.y = -6;
+          break;
+        case "ArrowDown":
+          jugador2.direccion.y = 6;
+          jugador2.realizarProteccion();
+          break;
+        case "ArrowLeft":
+          teclas.flechaIzquierda.presionada = true;
+          break;
+        case "ArrowRight":
+          teclas.flechaDerecha.presionada = true;
+          break;
+        case "ç":
+          jugador2.realizarAtaque();
+          break;
+      }
     }
   });
 
@@ -387,12 +402,23 @@ function iniciar() {
       !jugador2.proteccion
     ) {
       jugador1.atacando = false;
-      console.log("ataque jug1");
+      // console.log("ataque jug1");
       jugador2.vida -= 10;
       // document.getElementById("vidaJug2").style.width = jugador2.vida + "%";
       document.getElementById("vidaJug2").style.clipPath = `inset(0% ${
         100 - jugador2.vida
       }% 0% 0%)`;
+      if (jugador2.vida == 70) {
+        document.getElementById("vidaJug2").style.backgroundColor = "rgb(223, 204, 94)";
+      } else if (jugador2.vida == 50) {
+        document.getElementById("vidaJug2").style.backgroundColor = "rgb(216, 132, 63)";
+      } else if (jugador2.vida == 20) {
+        document.getElementById("vidaJug2").style.backgroundColor = "rgb(219, 61, 61)";
+      }
+
+      if (jugador2.vida <= 0) {
+        jugador2.cambiarSprite("muerte");
+      }
     }
 
     if (
@@ -406,7 +432,18 @@ function iniciar() {
       document.getElementById("vidaJug1").style.clipPath = `inset(0% ${
         100 - jugador1.vida
       }% 0% 0%)`;
-      console.log("ataque jug2");
+
+      if (jugador1.vida == 70) {
+        document.getElementById("vidaJug1").style.backgroundColor = "rgb(223, 204, 94)";
+      } else if (jugador1.vida == 50) {
+        document.getElementById("vidaJug1").style.backgroundColor = "rgb(216, 132, 63)";
+      }  else if (jugador1.vida == 20) {
+        document.getElementById("vidaJug1").style.backgroundColor = "rgb(219, 61, 61)";
+      }
+      // console.log("ataque jug2");
+      if (jugador1.vida <= 0) {
+        jugador1.cambiarSprite("muerte");
+      }
     }
   }
 
@@ -454,11 +491,15 @@ function iniciar() {
     jugador2.posicion.y = 100;
     document.getElementById("vidaJug1").style.clipPath = "inset(0% 0% 0% 0%)";
     document.getElementById("vidaJug2").style.clipPath = "inset(0% 0% 0% 0%)";
+    document.getElementById("vidaJug1").style.backgroundColor = "rgb(109, 223, 94)";
+    document.getElementById("vidaJug2").style.backgroundColor = "rgb(109, 223, 94)";
     document.getElementById("resultado").innerHTML = "";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    const seleccionPersonajes = document.querySelectorAll(".seleccionPersonajes");
-    seleccionPersonajes.forEach(selector => {
-        selector.style.display = "block";
+    const seleccionPersonajes = document.querySelectorAll(
+      ".seleccionPersonajes"
+    );
+    seleccionPersonajes.forEach((selector) => {
+      selector.style.display = "block";
     });
   });
 }

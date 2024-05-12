@@ -30,6 +30,7 @@ class Jugador extends Sprite{
         this.spritesPasados = 0;
         this.velocidadSprite = velocidadSprite;
         this.sprites = sprites;
+        this.muerto = false;
 
         for(const sprite in this.sprites){
             sprites[sprite].imagen = new Image();
@@ -40,7 +41,9 @@ class Jugador extends Sprite{
 
     actualizar(){
         this.mostrarSprite();
-        this.animacionSprite();
+        if (!this.muerto) {
+            this.animacionSprite();
+        }
     
         this.ataque.posicion.x = this.posicion.x - this.ataque.posicionLateral.x;
         this.ataque.posicion.y = this.posicion.y;
@@ -89,6 +92,10 @@ class Jugador extends Sprite{
     }
 
     cambiarSprite(sprite){
+        if (this.imagen === this.sprites.muerte.imagen) {
+            if  (this.spriteActual < this.sprites.muerte.cantSprites - 1) {this.muerto = true};
+            return;
+        }
         try {
             if(this.imagen === this.sprites.ataque.imagen && this.spriteActual < this.sprites.ataque.cantSprites - 1) return;
         } catch (error) {
@@ -132,6 +139,13 @@ class Jugador extends Sprite{
             if (this.imagen !== this.sprites.proteccion.imagen) {
                 this.imagen = this.sprites.proteccion.imagen;
                 this.cantSprites = this.sprites.proteccion.cantSprites;
+                this.spriteActual = 0;
+            }
+            break;
+        case 'muerte':
+            if (this.imagen !== this.sprites.muerte.imagen) {
+                this.imagen = this.sprites.muerte.imagen;
+                this.cantSprites = this.sprites.muerte.cantSprites;
                 this.spriteActual = 0;
             }
             break;

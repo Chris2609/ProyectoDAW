@@ -40,27 +40,12 @@ body {
 
 .vidaJug {
   position: absolute;
-  background-image: linear-gradient(
-    to right,
-    #ff0000,
-    #ff5b00,
-    #ff8800,
-    #ffae00,
-    #ffd100,
-    #f4e000,
-    #e5f000,
-    #d2ff00,
-    #b5ff00,
-    #94ff00,
-    #69ff00,
-    #00ff16
-  );
+  background-color: rgb(109, 223, 94);
   top: 0;
   height: 100%;
   width: 100%;
   clip-path: inset(0% 0% 0% 0%);
   transition: all 0.3s ease-in-out;
-
 }
 
 #contador {
