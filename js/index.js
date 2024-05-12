@@ -242,7 +242,7 @@ function iniciar() {
         case "ArrowRight":
           teclas.flechaDerecha.presionada = true;
           break;
-        case "ç":
+        case "Enter":
           jugador2.realizarAtaque();
           break;
       }
