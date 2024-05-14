@@ -1,119 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plaiaundi Battle!</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.cdnfonts.com/css/public-pixel" rel="stylesheet" />
+    <link rel="shortcut icon" href="img/logo.jpg" type="image/x-icon" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plaiaundi Battle!</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<link href="https://fonts.cdnfonts.com/css/public-pixel" rel="stylesheet" />
-<link rel="shortcut icon" href="img/logo.jpg" type="image/x-icon">
-
-<body>
-  <div id="contenedor">
-    <div id="contenedorVidasContador">
-      <div id="contenedorVida">
-        <div class="fondoVida"></div>
-        <div class="vidaJug" id="vidaJug1" style="right: 0; rotate: 180deg"></div>
-        <div class="seleccionPersonajes">
-          <br>
-          <h2 class="personajes" id="jonJug1">Jon</h2>
-          <br>
-          <h2 class="personajes" id="davidJug1">David</h2>
-          <br>
-          <h2 class="personajes" id="enriqueJug1">Enrique</h2>
+  <body>
+    <div id="fondo"></div>
+    <div id="contenedor">
+      <div id="contenedorVidasContador">
+        <div id="contenedorVida">
+          <div class="fondoVida"></div>
+          <div
+            class="vidaJug"
+            id="vidaJug1"
+            style="right: 0; rotate: 180deg"
+          ></div>
+          <div class="seleccionPersonajes">
+            <br />
+            <h2 class="personajes" id="jonJug1">Jon</h2>
+            <br />
+            <h2 class="personajes" id="davidJug1">David</h2>
+            <br />
+            <h2 class="personajes" id="enriqueJug1">Enrique</h2>
+          </div>
+          <br />
         </div>
-        <br>
 
+        <div id="contador"></div>
 
+        <div id="contenedorVida">
+          <div class="fondoVida"></div>
+          <div class="vidaJug" id="vidaJug2"></div>
+          <div class="seleccionPersonajes">
+            <br />
+            <h2 class="personajes" id="jonJug2">Jon</h2>
+            <br />
+            <h2 class="personajes" id="davidJug2">David</h2>
+            <br />
+            <h2 class="personajes" id="enriqueJug2">Enrique</h2>
+          </div>
+        </div>
       </div>
 
-      <div id="contador"></div>
+      <p id="resultado"></p>
+      <canvas id="canvas" width="1024" height="576"></canvas>
+      <br />
+      <h4 id="personajes">Personajes</h4>
+      <h4 id="iniciar" style="color: rgb(255, 57, 57)">Iniciar</h4>
+      <h4 id="open">Controles</h4>
 
-      <div id="contenedorVida">
-        <div class="fondoVida"></div>
-        <div class="vidaJug" id="vidaJug2"></div>
-        <div class="seleccionPersonajes">
-          <br>
-          <h2 class="personajes" id="jonJug2">Jon</h2>
-          <br>
-          <h2 class="personajes" id="davidJug2">David</h2>
-          <br>
-          <h2 class="personajes" id="enriqueJug2">Enrique</h2>
+      <!-- Menu Controles -->
+      <div id="modal_container" class="modal-container">
+        <div class="modal">
+          <h1 style="margin-bottom: 40px">Controles</h1>
+          <div style="margin-bottom: 40px; font-size: 17px">
+            Jugador 1
+            <div style="display: flex; justify-content: space-around">
+              <div>
+                <p style="font-size: 14px; margin-bottom: 20px">Movimientos</p>
+                <p style="font-size: 22px; margin-bottom: 5px">w</p>
+                <p style="display: inline; font-size: 22px">a</p>
+                <p style="display: inline; font-size: 22px">s</p>
+                <p style="display: inline; font-size: 22px">d</p>
+              </div>
+              <div>
+                <p style="font-size: 14px; margin-bottom: 30px">Ataque</p>
+                <p style="display: inline; font-size: 14px">Espacio</p>
+              </div>
+              <div>
+                <p style="font-size: 14px; margin-bottom: 30px">Esquivar</p>
+                <p style="display: inline; font-size: 22px">s</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 40px; margin-top: 40px; font-size: 17px">
+            Jugador 2
+            <div
+              style="
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 12px;
+              "
+            >
+              <div>
+                <p style="font-size: 14px; margin-bottom: 20px">Movimientos</p>
+                <p style="font-size: 22px; margin-bottom: 5px">↑</p>
+                <p style="display: inline; font-size: 22px">←</p>
+                <p style="display: inline; font-size: 22px">↓</p>
+                <p style="display: inline; font-size: 22px">→</p>
+              </div>
+              <div>
+                <p style="font-size: 14px; margin-bottom: 30px">Ataque</p>
+                <p style="display: inline; font-size: 22px">Enter ↵</p>
+              </div>
+              <div>
+                <p style="font-size: 14px; margin-bottom: 30px">Bloquear</p>
+                <p style="display: inline; font-size: 22px">↓</p>
+              </div>
+            </div>
+          </div>
+
+          <button id="close">Cerrar</button>
         </div>
-
       </div>
     </div>
-    <p id="resultado"></p>
-    <canvas id="canvas" width="1024" height="576"></canvas>
-    <br>
-    <h4 id="personajes">Personajes </h4>
-    <h4 id="iniciar" style="color: rgb(255, 57, 57);">Iniciar</h4>
-    <h4 id="open">Controles</h4>
 
-    <!-- Menu Controles -->
-    <div id="modal_container" class="modal-container">
-      <div class="modal">
-        <h1 style="margin-bottom: 40px;">Controles</h1>
-        <p style="margin-bottom: 40px; font-size: 17px">
-          Jugador 1
-        <div style="display: flex; justify-content: space-around;">
-          <div>
-            <p style="font-size: 14px;margin-bottom: 20px;">Movimientos</p>
-            <p style="font-size: 22px; margin-bottom: 5px;">w</p>
-            <p style="display: inline; font-size: 22px;">a</p>
-            <p style="display: inline; font-size: 22px;">s</p>
-            <p style="display: inline; font-size: 22px;">d</p>
-          </div>
-          <div>
-            <p style="font-size: 14px; margin-bottom: 30px;">Ataque</p>
-            <p style="display: inline; font-size: 14px;">Espacio</p>
-          </div>
-          <div>
-            <p style="font-size: 14px; margin-bottom: 30px;">Esquivar</p>
-            <p style="display: inline; font-size: 22px;">s</p>
+    <img
+      src="img/logo.jpg"
+      style="position: absolute; top: 0; left: 0; z-index: -1"
+      width="200px"
+      alt="Logo"
+    />
 
-          </div>
-        </div>
-        </p>
-
-        <p style="margin-bottom: 40px; margin-top: 40px; font-size: 17px">
-          Jugador 2
-        <div style="display: flex; justify-content: space-around; margin-bottom: 12px;">
-          <div>
-            <p style="font-size: 14px;margin-bottom: 20px;">Movimientos</p>
-            <p style="font-size: 22px; margin-bottom: 5px;">↑</p>
-            <p style="display: inline; font-size: 22px;">←</p>
-            <p style="display: inline; font-size: 22px;">↓</p>
-            <p style="display: inline; font-size: 22px;">→</p>
-          </div>
-          <div>
-            <p style="font-size: 14px; margin-bottom: 30px;">Ataque</p>
-            <p style="display: inline; font-size: 22px;">Enter ↵</p>
-          </div>
-          <div>
-            <p style="font-size: 14px; margin-bottom: 30px;">Bloquear</p>
-            <p style="display: inline; font-size: 22px;">↓</p>
-
-          </div>
-        </div>
-
-        </p>
-        <button id="close">Cerrar</button>
-      </div>
-    </div>
-
-  </div>
-
-  <img src="img/logo.jpg" style="position: absolute; top: 0; left: 0; z-index: -1;" width="200px" alt="Logo">
-
-  <script src="js/sprite.js"></script>
-  <script src="js/jugador.js"></script>
-  <script src="js/index.js"></script>
-  <script src="js/controles.js"></script>
-
-</body>
-
-
+    <script src="js/sprite.js"></script>
+    <script src="js/jugador.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/controles.js"></script>
+  </body>
 </html>

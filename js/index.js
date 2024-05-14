@@ -308,8 +308,8 @@ function iniciar() {
       document.getElementById("contador").innerHTML = tiempo;
       tiempo--;
     } else if (tiempo <= 0) {
-      clearTimeout(timeout);
       cancelAnimationFrame(animationFrameId);
+      clearTimeout(timeout);
       if (jugador1.vida > jugador2.vida) {
         // alert("Tiempo agotado, gana jugador 1");
         resultado.innerHTML = "Tiempo agotado, ¡gana el jugador 1!";
