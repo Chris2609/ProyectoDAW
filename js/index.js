@@ -59,7 +59,9 @@ psjEscogidos = setInterval(() => {
   }
 }, 100);
 
+// Se declara fuera de la función para poder detener el tiempo cuando se reinicie el juego
 var timeout;
+var animationFrameIds = [];
 
 function iniciar() {
   document.getElementById("vidaJug1").style.clipPath = "inset(0% 0% 0% 0%)";
@@ -68,8 +70,9 @@ function iniciar() {
   document.getElementById("vidaJug2").style.backgroundColor = "rgb(109, 223, 94)";
   resultado.innerHTML = "";
   clearTimeout(timeout);
-  cancelAnimationFrame(animationFrameId);
-
+  animationFrameIds.forEach((id) => {
+    cancelAnimationFrame(id);
+  });
   const seleccionPersonajes = document.querySelectorAll(".seleccionPersonajes");
   seleccionPersonajes.forEach((selector) => {
     selector.style.display = "none";
@@ -298,8 +301,7 @@ function iniciar() {
     tiempoRestante();
   }
 
-  // Se declara fuera de la función para poder detener el tiempo cuando se reinicie el juego
-  var animationFrameId;
+
 
   //Restar el contador, añadir condiciones de victoria y empate
   function tiempoRestante() {
@@ -308,7 +310,9 @@ function iniciar() {
       document.getElementById("contador").innerHTML = tiempo;
       tiempo--;
     } else if (tiempo <= 0) {
-      cancelAnimationFrame(animationFrameId);
+      animationFrameIds.forEach((id) => {
+        cancelAnimationFrame(id);
+      });
       clearTimeout(timeout);
       if (jugador1.vida > jugador2.vida) {
         // alert("Tiempo agotado, gana jugador 1");
@@ -340,7 +344,7 @@ function iniciar() {
   function movimiento() {
     // sirve para hacer que el navegador redibuje el contenido continuamente al llamar a esta misma funcion
 
-    animationFrameId = window.requestAnimationFrame(movimiento);
+    animationFrameIds.push(window.requestAnimationFrame(movimiento));
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "black";
@@ -455,7 +459,7 @@ function iniciar() {
     let prevTime = Date.now(),
       frames = 0;
 
-    requestAnimationFrame(function loop() {
+    animationFrameIds.push(requestAnimationFrame(function loop() {
       const time = Date.now();
       frames++;
       if (time > prevTime + 1000) {
@@ -472,7 +476,7 @@ function iniciar() {
       }
 
       if (!incializado) requestAnimationFrame(loop);
-    });
+    }));
   }
 
   fpsMeter();
@@ -481,8 +485,9 @@ function iniciar() {
 
   personajes.addEventListener("click", () => {
     clearTimeout(timeout);
-    cancelAnimationFrame(animationFrameId);
-    contador.innerHTML = "";
+    animationFrameIds.forEach((id) => {
+      cancelAnimationFrame(id);
+    });    contador.innerHTML = "";
     jugador1.vida = 100;
     jugador2.vida = 100;
     jugador1.posicion.x = 50;
